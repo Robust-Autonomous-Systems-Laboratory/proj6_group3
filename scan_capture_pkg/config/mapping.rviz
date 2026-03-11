@@ -1,0 +1,135 @@
+Panels:
+  - Class: rviz_common/Displays
+    Name: Displays
+    Property Tree Widget:
+      Expanded:
+        - /Global Options1
+        - /LaserScan1
+        - /Localization Pose1
+        - /Captured PointCloud1
+      Splitter Ratio: 0.5
+  - Class: rviz_common/Views
+    Name: Views
+
+Visualization Manager:
+  Class: ""
+  Displays:
+    - Class: rviz_default_plugins/Grid
+      Name: Grid
+      Enabled: true
+      Line Style:
+        Line Width: 0.03
+        Value: Lines
+      Normal Cell Count: 0
+      Offset:
+        X: 0
+        Y: 0
+        Z: 0
+      Plane: XY
+      Plane Cell Count: 20
+      Reference Frame: <Fixed Frame>
+      
+    - Class: rviz_default_plugins/TF
+      Name: TF
+      Enabled: true
+      Frame Timeout: 15
+      Frames:
+        All Enabled: true
+      Marker Scale: 0.5
+      Show Arrows: true
+      Show Axes: true
+      Show Names: true
+      
+    - Class: rviz_default_plugins/LaserScan
+      Name: LaserScan
+      Enabled: true
+      Topic:
+        Value: /scan
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Color: 255; 255; 0
+      Size (m): 0.02
+      Style: Flat Squares
+      
+    - Class: rviz_default_plugins/PointCloud2
+      Name: Captured PointCloud
+      Enabled: true
+      Topic:
+        Value: /scan_capture/pointcloud
+        Depth: 5
+        Durability Policy: Volatile
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color: 0; 255; 0
+      Size (m): 0.05
+      Style: Spheres
+      
+    - Class: rviz_default_plugins/Pose
+      Name: Localization Pose
+      Enabled: true
+      Topic:
+        Value: /localization/pose
+        Depth: 5
+        History Policy: Keep Last
+        Reliability Policy: Reliable
+      Color: 0; 100; 255
+      Shape: Arrow
+      Axes Length: 0.3
+      Axes Radius: 0.02
+      Arrow Head Length: 0.15
+      Arrow Head Radius: 0.08
+      Arrow Shaft Length: 0.3
+      Arrow Shaft Radius: 0.04
+      
+    - Class: rviz_default_plugins/Odometry
+      Name: Odometry
+      Enabled: true
+      Topic:
+        Value: /odom
+        Depth: 5
+        History Policy: Keep Last
+        Reliability Policy: Best Effort
+      Color: 255; 100; 0
+      Covariance:
+        Orientation:
+          Alpha: 0.5
+        Position:
+          Alpha: 0.3
+        Value: false
+      Keep: 100
+      Position Tolerance: 0.1
+      Angle Tolerance: 0.1
+      Shape:
+        Alpha: 0.5
+        Axes Length: 0.2
+        Axes Radius: 0.01
+        Color: 255; 100; 0
+        Head Length: 0.1
+        Head Radius: 0.03
+        Shaft Length: 0.15
+        Shaft Radius: 0.02
+        Value: Arrow
+
+  Global Options:
+    Background Color: 48; 48; 48
+    Fixed Frame: odom
+    Frame Rate: 30
+
+  Name: root
+  Tools:
+    - Class: rviz_default_plugins/MoveCamera
+    - Class: rviz_default_plugins/FocusCamera
+    - Class: rviz_default_plugins/Measure
+
+  Value: true
+  Views:
+    Current:
+      Class: rviz_default_plugins/TopDownOrtho
+      Name: TopDownOrtho
+      Near Clip Distance: 0.01
+      Scale: 50
+      Target Frame: odom
+      X: 0
+      Y: 0

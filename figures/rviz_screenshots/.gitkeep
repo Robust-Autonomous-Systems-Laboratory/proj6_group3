@@ -1,0 +1,5 @@
+# RViz screenshots for each waypoint
+# Include screenshots showing:
+#   - The estimated pose
+#   - The captured point cloud
+#   - The path traveled

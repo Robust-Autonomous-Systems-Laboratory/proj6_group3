@@ -1,0 +1,12 @@
+# CaptureScan.srv
+# Service to capture a laser scan at a waypoint
+
+# Request
+int32 waypoint_id          # ID of the current waypoint (1-indexed)
+string description         # Optional description of the waypoint
+---
+# Response
+bool success               # Whether capture was successful
+string message             # Status message
+string filename            # Path to saved point cloud file
+geometry_msgs/PoseStamped pose  # Estimated pose at capture time

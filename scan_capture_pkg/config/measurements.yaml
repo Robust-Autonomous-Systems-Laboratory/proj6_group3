@@ -1,0 +1,111 @@
+# =============================================================================
+# GROUND TRUTH MEASUREMENTS
+# =============================================================================
+#
+# PURPOSE:
+# This file records physical measurements taken at each waypoint.
+# After building your map, you will compare these measurements against
+# distances measured in RViz to evaluate map accuracy.
+#
+# WHAT TO MEASURE:
+# 1. Waypoint position (x, y) relative to start - using tape measure
+# 2. Distance to a landmark (wall, corner, pillar) from that waypoint
+# 3. Approximate direction to the landmark (for orientation check)
+#
+# HOW TO USE:
+# 1. At each waypoint, identify a clear landmark visible in the LiDAR scan
+# 2. Measure the distance from the robot (LiDAR center) to that landmark
+# 3. Note what direction you're facing and where the landmark is relative
+#    to the robot (e.g., "directly ahead", "45° to the left")
+# 4. After your run, open all captured point clouds in RViz
+# 5. Use RViz's Measure tool to check the same distances in your map
+# 6. Compare: Do the map distances match your tape-measure distances?
+#
+# =============================================================================
+
+waypoints:
+  - id: 1
+    description: "Start position"
+    
+    # Position relative to start (this is always 0,0 for waypoint 1)
+    position:
+      x_m: 0.0
+      y_m: 0.0
+    
+    # Robot orientation: describe what direction the robot is facing
+    # Example: "Facing north wall", "Aligned with doorway", "Parallel to east wall"
+    orientation_reference: "Initial heading (define as 0°)"
+    
+    # Landmark measurement: measure distance to a visible feature
+    landmark:
+      description: "North wall, directly ahead"  # What is the landmark?
+      measured_distance_m: 0.0    # Distance from robot to landmark (tape measure)
+      direction: "0° (straight ahead)"  # Where is it relative to robot heading?
+      
+  - id: 2
+    description: ""
+    position:
+      x_m: 0.0    # Measure from start position
+      y_m: 0.0
+    orientation_reference: ""
+    landmark:
+      description: ""
+      measured_distance_m: 0.0
+      direction: ""
+      
+  - id: 3
+    description: ""
+    position:
+      x_m: 0.0
+      y_m: 0.0
+    orientation_reference: ""
+    landmark:
+      description: ""
+      measured_distance_m: 0.0
+      direction: ""
+      
+  - id: 4
+    description: ""
+    position:
+      x_m: 0.0
+      y_m: 0.0
+    orientation_reference: ""
+    landmark:
+      description: ""
+      measured_distance_m: 0.0
+      direction: ""
+      
+  - id: 5
+    description: ""
+    position:
+      x_m: 0.0
+      y_m: 0.0
+    orientation_reference: ""
+    landmark:
+      description: ""
+      measured_distance_m: 0.0
+      direction: ""
+
+# Summary of map accuracy (fill in after analysis)
+map_evaluation:
+  # For each waypoint, record the RViz-measured distance and compute error
+  # Example:
+  # - waypoint: 1
+  #   landmark: "North wall"
+  #   measured_m: 2.35
+  #   rviz_m: 2.31
+  #   error_m: 0.04
+  #   error_percent: 1.7
+  results: []
+  
+  # Overall assessment
+  mean_distance_error_m: 0.0
+  max_distance_error_m: 0.0
+  notes: ""
+
+# Metadata
+metadata:
+  date: "YYYY-MM-DD"
+  team_members: []
+  environment: ""
+  measurement_tool: "Tape measure"
