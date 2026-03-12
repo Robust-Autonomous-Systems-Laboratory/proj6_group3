@@ -1,0 +1,31 @@
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Build artifacts
+build/
+install/
+log/
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+
+# ROS bags
+*.db3
+*.mcap
+*.yaml.bak
+
+# Data (large files — commit selectively)
+data/captures/*.yaml
+data/captures/*.npy
+data/mapping_run/
+
+# Figures (commit intentionally)
+# figures/
+
+# OS
+.DS_Store
+Thumbs.db
