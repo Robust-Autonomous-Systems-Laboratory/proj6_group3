@@ -1,0 +1,18 @@
+waypoint_id: 7
+description: ''
+timestamp: '20260313_142809'
+pose:
+  frame_id: odom
+  x: -2.285599298271221
+  y: -14.472799996772704
+  z: 0.0
+  yaw_rad: -2.675829391427385
+scan:
+  frame_id: base_scan
+  angle_min: 0.0208263099193573
+  angle_max: 6.273840427398682
+  angle_increment: 0.02936703711748123
+  range_min: 0.0
+  range_max: 100.0
+  num_ranges: 213
+  ranges_file: wp_07_20260313_142809.npy
