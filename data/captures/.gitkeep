@@ -1,4 +1,0 @@
-# Captured scan data will be saved here
-# Each capture creates:
-#   - waypoint_XX_TIMESTAMP.yaml (pose and metadata)
-#   - waypoint_XX_TIMESTAMP_ranges.npy (raw range data)
