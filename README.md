@@ -22,7 +22,7 @@ The environment is a lab EERC 727 with a recycling bin placed in the center. The
 
 The robot circled the recycling bin clockwise across five waypoints, then returned to the start position where a sixth capture was taken for loop closure check. At each stop the procedure was: (1) take an RViz screenshot, (2) call the scan capture service, then (3) walk over and measure the distance to the nearest visible corner of the bin with the Leica laser rangefinder in addition to the walls. Poses are in the odometry frame (captured 2026-03-14).
 
-| Capture | Odom X (m) | Odom Y (m) | Yaw (°) | Approx. Heading | Notes                        |
+| Capture | Odom X (m) | Odom Y (m) | Yaw (deg) | Approx. Heading | Notes                        |
 |---------|------------|------------|---------|-----------------|------------------------------|
 | WP 1    | −2.167     | −0.025     |  +1     | East            | Start position               |
 | WP 2    | −1.382     | +0.043     |  +3     | East            |                              |
@@ -113,32 +113,32 @@ RViz measurements were taken using the Measure tool after replaying the bag file
 
 At each waypoint the robot should see: the **north wall** behind/to the side, the **east door** to the east, and the **recycling bin corner** in the expected direction. Misalignment is noted where the observed point cloud deviates from these expectations.
 
-**Waypoint 1** (yaw approx. +1°, facing east):
+**Waypoint 1** (yaw approx. +1deg, facing east):
 - Expected: north wall to the left (north), east door ahead-right, bin corner to the south-west
 - Observed in map:
 - Rotational misalignment:
 
-**Waypoint 2** (yaw approx. +3°, facing east):
+**Waypoint 2** (yaw approx. +3deg, facing east):
 - Expected: north wall to the left (north), east door ahead, bin corner to the south-west
 - Observed in map:
 - Rotational misalignment:
 
-**Waypoint 3** (yaw approx. −97°, facing south):
+**Waypoint 3** (yaw approx. −97deg, facing south):
 - Expected: north wall behind, east door to the left, bin corner to the north-west
 - Observed in map:
 - Rotational misalignment:
 
-**Waypoint 4** (yaw approx. −170°, facing west):
+**Waypoint 4** (yaw approx. −170deg, facing west):
 - Expected: north wall to the right, east door to the right-rear, bin corner ahead-right (north)
 - Observed in map:
 - Rotational misalignment:
 
-**Waypoint 5** (yaw approx. +105°, facing north):
+**Waypoint 5** (yaw approx. +105deg, facing north):
 - Expected: north wall ahead, east door to the right, bin corner to the right (east)
 - Observed in map:
 - Rotational misalignment:
 
-**Loop closure capture (capture 6, return to start)** (yaw approx. +16°, facing east):
+**Loop closure capture (capture 6, return to start)** (yaw approx. +16deg, facing east):
 - Expected: same view as WP 1 — north wall to the left, east door ahead-right, bin corner to the south-west
 - Scan alignment with WP 1 in map:
 - Rotational offset relative to WP 1:
@@ -176,7 +176,7 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 
 - **Localization drift:** The EKF fuses odometry and IMU but cannot correct for accumulated drift without loop closure or external reference. Over the 5-waypoint circuit, any unobservable wheel slip or IMU bias compounds, shifting later scan placements in the odom frame. The loop closure capture (WP 6) quantifies this accumulated drift directly.
 - **Measurement uncertainty:** Physical tape-measure readings have an estimated uncertainty of ± ___ m (straight-line measurement to a surface). LiDAR range noise (±30 mm typical for LDS-01) contributes additional uncertainty to RViz measurements.
-- **Sensor limitations:** The LDS-01/02 returns sparse range rings at low angular resolution near 0° and 360°. Glass or reflective surfaces in the environment may produce spurious returns or max-range drop-outs.
+- **Sensor limitations:** The LDS-01/02 returns sparse range rings at low angular resolution near 0deg and 360deg. Glass or reflective surfaces in the environment may produce spurious returns or max-range drop-outs.
 
 ### Map Consistency Assessment
 
