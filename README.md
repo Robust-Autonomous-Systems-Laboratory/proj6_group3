@@ -70,11 +70,11 @@ RViz measurements were taken using the Measure tool after replaying the bag file
 
 | Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
 |----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    |           |          |           |           |
-| 2        | East    |           |          |           |           |
-| 3        | South   |           |          |           |           |
-| 4        | West    |           |          |           |           |
-| 5        | North   |           |          |           |           |
+| 1        | East    | 1.655     |          |           |           |
+| 2        | East    | 1.778     |          |           |           |
+| 3        | South   | 1.168     |          |           |           |
+| 4        | West    | 1.324     |          |           |           |
+| 5        | North   | 1.662     |          |           |           |
 | **Mean** |         |           |          |           |           |
 | **Max**  |         |           |          |           |           |
 
@@ -82,11 +82,11 @@ RViz measurements were taken using the Measure tool after replaying the bag file
 
 | Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
 |----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    |           |          |           |           |
-| 2        | East    |           |          |           |           |
-| 3        | South   |           |          |           |           |
-| 4        | West    |           |          |           |           |
-| 5        | North   |           |          |           |           |
+| 1        | East    | 1.506     |          |           |           |
+| 2        | East    | 1.417     |          |           |           |
+| 3        | South   | 3.014     |          |           |           |
+| 4        | West    | 4.743     |          |           |           |
+| 5        | North   | 3.752     |          |           |           |
 | **Mean** |         |           |          |           |           |
 | **Max**  |         |           |          |           |           |
 
@@ -94,11 +94,11 @@ RViz measurements were taken using the Measure tool after replaying the bag file
 
 | Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
 |----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    |           |          |           |           |
-| 2        | East    |           |          |           |           |
-| 3        | South   |           |          |           |           |
-| 4        | West    |           |          |           |           |
-| 5        | North   |           |          |           |           |
+| 1        | East    | 3.980     |          |           |           |
+| 2        | East    | 1.999     |          |           |           |
+| 3        | South   | 1.865     |          |           |           |
+| 4        | West    | 4.309     |          |           |           |
+| 5        | North   | 5.514     |          |           |           |
 | **Mean** |         |           |          |           |           |
 | **Max**  |         |           |          |           |           |
 
@@ -106,8 +106,8 @@ RViz measurements were taken using the Measure tool after replaying the bag file
 
 | | Leica Bin (m) | RViz Bin (m) | Leica N-Wall (m) | RViz N-Wall (m) | Leica Door (m) | RViz Door (m) | Drift (m) |
 |---|---------------|--------------|------------------|-----------------|----------------|---------------|-----------|
-| WP 1 (start)       | | | | | | | — |
-| Capture 6 (return) | | | | | | |   |
+| WP 1 (start)       | 1.655 | | 1.506 | | 3.980 | | — |
+| Capture 6 (return) | 1.757 | | 1.376 | | 3.958 | |   |
 
 ### Orientation Assessment
 
@@ -175,7 +175,7 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 ### Sources of Error
 
 - **Localization drift:** The EKF fuses odometry and IMU but cannot correct for accumulated drift without loop closure or external reference. Over the 5-waypoint circuit, any unobservable wheel slip or IMU bias compounds, shifting later scan placements in the odom frame. The loop closure capture (WP 6) quantifies this accumulated drift directly.
-- **Measurement uncertainty:** Physical tape-measure readings have an estimated uncertainty of ± ___ m (straight-line measurement to a surface). LiDAR range noise (±30 mm typical for LDS-01) contributes additional uncertainty to RViz measurements.
+- **Measurement uncertainty:** Physical tape-measure readings have an estimated uncertainty of ± ___ m (straight-line measurement to a surface). LDS range noise (±30 mm typical for LDS-01) contributes additional uncertainty to RViz measurements.
 - **Sensor limitations:** The LDS-01/02 returns sparse range rings at low angular resolution near 0deg and 360deg. Glass or reflective surfaces in the environment may produce spurious returns or max-range drop-outs.
 
 ### Map Consistency Assessment
@@ -289,3 +289,4 @@ In RViz, set the `/scan_capture/pointcloud` display history depth to at least th
 ---
 
 ## 6. Acknowledgements
+Anders Smitterberg acknowledges his use of generative artificial intelligence in debugging code, and creation and formatting of markdown files.
