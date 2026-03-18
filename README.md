@@ -215,11 +215,11 @@ Global consistency is weaker than local consistency. By the time the robot reach
 ### Recommendations for Improvement
 
 - Record `/tf` and `/tf_static` in the bag file so the captured point clouds can be replayed directly in RViz in the correct frame.
-- Add an absolute correction source such as AMCL, scan matching, fiducials, or wall-based alignment.
+- Add a method of coreecting map faya such as overlaying features.
 - Reduce waypoint spacing so drift has less time to accumulate between captures.
 - Revisit EKF tuning, especially heading-related uncertainty, since later-waypoint errors suggest accumulated orientation drift.
-- Use the Project 5 sensor characterization model to down-weight long-range returns.
-- Standardize landmark measurement by always selecting the same physical edge or corner when using the interactive measurement tool.
+- Use the Project 5 sensor characterization model to help reject outlier point returns
+- Standardize landmarks to be sonething visible in reality like tape on the wal but alsy maybe a piece of cardboard at an angle to make the corner visible in rviz.
 
 
 ---
