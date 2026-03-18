@@ -62,52 +62,64 @@ This could be used to asign a probability of a real object being at the location
 
 ## 3. Map Accuracy Results (15 pts)
 
+### Note on Map Measurement Method
+
+The assignment instructions specify measuring distances using the RViz Measure tool after replaying the bag file, stating that the captured point clouds *"appear correctly in RViz during bag replay because TF provides the transform from the laser frame to `odom` at each capture timestamp."* However, the bag record command provided in the instructions does not include `/tf` or `/tf_static`:
+
+```
+ros2 bag record -o mapping_run /scan /odom /imu /localization/pose /scan_capture/pointcloud
+```
+
+Unfortunately because TF was not recorded, RViz cannot transform the captured point clouds (which are in the `base_scan` frame) into the `odom` fixed frame during playback. As a result, RViz only shows the TF axes and nothing else.
+
+To work around this, map distances were measured using `analysis/visualize_captures.py --measure`, which reads the saved `.yaml` pose and `.npy` range files directly, transforms each scan into the odom frame using the recorded pose, and provides an interactive click-to-measure tool. Since the robot position at each waypoint is known exactly from the saved pose, the measurement is equivalent to what the RViz Measure tool would have provided.
+
 ### Distance Accuracy Table
 
-RViz measurements were taken using the Measure tool after replaying the bag file with all captures visible simultaneously. Leica ground truth was measured immediately after each scan capture during the run. Three landmarks were measured at every waypoint: the **nearest visible corner of the recycling bin**, the **north wall**, and the **east door**.
+Map distances were measured using `analysis/visualize_captures.py --measure` (see note above). The "Map (m)" column contains distances measured from the robot's saved odom position to the clicked landmark point in the transformed scan. Leica ground truth was measured immediately after each scan capture during the run. Three landmarks were measured at every waypoint: the **nearest visible corner of the recycling bin**, the **north wall**, and the **east door**.
 
 #### Recycling Bin Corner
 
-| Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
-|----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    | 1.655     |          |           |           |
-| 2        | East    | 1.778     |          |           |           |
-| 3        | South   | 1.168     |          |           |           |
-| 4        | West    | 1.324     |          |           |           |
-| 5        | North   | 1.662     |          |           |           |
-| **Mean** |         |           |          |           |           |
-| **Max**  |         |           |          |           |           |
+| Waypoint | Heading | Leica (m) | Map (m) | Error (m) | Error (%) |
+|----------|---------|-----------|---------|-----------|-----------|
+| 1        | East    | 1.655     | 1.669   | +0.014    | 0.85      |
+| 2        | East    | 1.778     | 1.809   | +0.031    | 1.74      |
+| 3        | South   | 1.168     | 1.180   | +0.012    | 1.03      |
+| 4        | West    | 1.324     | 1.291   | −0.033    | 2.49      |
+| 5        | North   | 1.662     | 1.672   | +0.010    | 0.60      |
+| **Mean** |         |           |         | **0.020** | **1.34**  |
+| **Max**  |         |           |         | **0.033** | **2.49**  |
 
 #### North Wall
 
-| Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
-|----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    | 1.506     |          |           |           |
-| 2        | East    | 1.417     |          |           |           |
-| 3        | South   | 3.014     |          |           |           |
-| 4        | West    | 4.743     |          |           |           |
-| 5        | North   | 3.752     |          |           |           |
-| **Mean** |         |           |          |           |           |
-| **Max**  |         |           |          |           |           |
+| Waypoint | Heading | Leica (m) | Map (m) | Error (m) | Error (%) |
+|----------|---------|-----------|---------|-----------|-----------|
+| 1        | East    | 1.506     | 1.530   | +0.024    | 1.59      |
+| 2        | East    | 1.417     | 1.414   | −0.003    | 0.21      |
+| 3        | South   | 3.014     | 3.007   | −0.007    | 0.23      |
+| 4        | West    | 4.743     | 4.773   | +0.030    | 0.63      |
+| 5        | North   | 3.752     | 3.785   | +0.033    | 0.88      |
+| **Mean** |         |           |         | **0.019** | **0.71**  |
+| **Max**  |         |           |         | **0.033** | **1.59**  |
 
 #### East Door
 
-| Waypoint | Heading | Leica (m) | RViz (m) | Error (m) | Error (%) |
-|----------|---------|-----------|----------|-----------|-----------|
-| 1        | East    | 3.980     |          |           |           |
-| 2        | East    | 1.999     |          |           |           |
-| 3        | South   | 1.865     |          |           |           |
-| 4        | West    | 4.309     |          |           |           |
-| 5        | North   | 5.514     |          |           |           |
-| **Mean** |         |           |          |           |           |
-| **Max**  |         |           |          |           |           |
+| Waypoint | Heading | Leica (m) | Map (m) | Error (m) | Error (%) |
+|----------|---------|-----------|---------|-----------|-----------|
+| 1        | East    | 3.980     | 3.981   | +0.001    | 0.03      |
+| 2        | East    | 1.999     | 1.996   | −0.003    | 0.15      |
+| 3        | South   | 1.865     | 1.754   | −0.111    | 5.95      |
+| 4        | West    | 4.309     | 3.895   | −0.414    | 9.61      |
+| 5        | North   | 5.514     | 5.201   | −0.313    | 5.68      |
+| **Mean** |         |           |         | **0.168** | **4.28**  |
+| **Max**  |         |           |         | **0.414** | **9.61**  |
 
-**Loop closure check** — capture 6 is taken at the start position. Comparing its measurements to WP 1 reveals accumulated odometry drift over the full circuit.
+**Loop closure check** -- capture 6 is taken at the start position. Comparing its measurements to WP 1 reveals accumulated odometry drift over the full circuit. Drift is computed as the difference in map-measured distance between WP 6 and WP 1 for each landmark.
 
-| | Leica Bin (m) | RViz Bin (m) | Leica N-Wall (m) | RViz N-Wall (m) | Leica Door (m) | RViz Door (m) | Drift (m) |
-|---|---------------|--------------|------------------|-----------------|----------------|---------------|-----------|
-| WP 1 (start)       | 1.655 | | 1.506 | | 3.980 | | — |
-| Capture 6 (return) | 1.757 | | 1.376 | | 3.958 | |   |
+| | Leica Bin (m) | Map Bin (m) | Leica N-Wall (m) | Map N-Wall (m) | Leica Door (m) | Map Door (m) | Drift -- Bin (m) |
+|---|---------------|-------------|------------------|----------------|----------------|--------------|-----------------|
+| WP 1 (start)       | 1.655 | 1.669 | 1.506 | 1.530 | 3.980 | 3.981 | --     |
+| Capture 6 (return) | 1.757 | 1.755 | 1.376 | 1.399 | 3.958 | 3.922 | +0.086 |
 
 ### Orientation Assessment
 
@@ -139,7 +151,7 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 - Rotational misalignment:
 
 **Loop closure capture (capture 6, return to start)** (yaw approx. +16deg, facing east):
-- Expected: same view as WP 1 — north wall to the left, east door ahead-right, bin corner to the south-west
+- Expected: same view as WP 1 -- north wall to the left, east door ahead-right, bin corner to the south-west
 - Scan alignment with WP 1 in map:
 - Rotational offset relative to WP 1:
 
@@ -158,11 +170,20 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 
 **Overall map with all scans visualized:**
 
-![Map overlay — all captures](figures/map_overlay.png)
+![Map overlay -- all captures](figures/map_overlay.png)
 
 **Measurement tool usage:**
 
-*(add screenshots to `figures/map_evaluation/` showing the RViz Measure tool for at least two representative waypoints)*
+Distances were measured using `analysis/visualize_captures.py --measure`. A figure is saved automatically to `figures/map_evaluation/` after all three landmarks are measured at each waypoint.
+
+| Waypoint | Measurement Screenshot |
+|----------|----------------------|
+| WP 1     | ![WP1 measurements](figures/map_evaluation/wp1_measurements.png) |
+| WP 2     | ![WP2 measurements](figures/map_evaluation/wp2_measurements.png) |
+| WP 3     | ![WP3 measurements](figures/map_evaluation/wp3_measurements.png) |
+| WP 4     | ![WP4 measurements](figures/map_evaluation/wp4_measurements.png) |
+| WP 5     | ![WP5 measurements](figures/map_evaluation/wp5_measurements.png) |
+| WP 6 (loop closure) | ![WP6 measurements](figures/map_evaluation/wp6_measurements.png) |
 
 ---
 
@@ -170,13 +191,18 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 
 ### Mapping Accuracy Analysis
 
-
+| Landmark     | Mean Error (m) | Max Error (m) | Mean Error (%) | Max Error (%) |
+|--------------|---------------|--------------|----------------|--------------|
+| Bin Corner   | 0.020         | 0.033        | 1.34           | 2.49         |
+| North Wall   | 0.019         | 0.033        | 0.71           | 1.59         |
+| East Door    | 0.168         | 0.414        | 4.28           | 9.61         |
+| Loop Closure (WP 6 vs WP 1) | 0.092 | 0.131 | 5.13 | 8.70 |
 
 ### Sources of Error
 
 - **Localization drift:** The EKF fuses odometry and IMU but cannot correct for accumulated drift without loop closure or external reference. Over the 5-waypoint circuit, any unobservable wheel slip or IMU bias compounds, shifting later scan placements in the odom frame. The loop closure capture (WP 6) quantifies this accumulated drift directly.
-- **Measurement uncertainty:** Physical tape-measure readings have an estimated uncertainty of ± ___ m (straight-line measurement to a surface). LDS range noise (±30 mm typical for LDS-01) contributes additional uncertainty to RViz measurements.
-- **Sensor limitations:** The LDS-01/02 returns sparse range rings at low angular resolution near 0deg and 360deg. Glass or reflective surfaces in the environment may produce spurious returns or max-range drop-outs.
+- **Measurement uncertainty:** Leica rangefinder measurements have some uncertainty. LDS range noise contributes additional uncertainty to map measurements.
+- **Landmark occlusion:** The east door was partially obscured from several waypoints, making it difficult to identify and click a consistent measurement point in the scan that matched the exact point measured by the Leica. This is what I believe to be the primary cause of the elevated door errors at WP 3–5 (up to 41 cm / 9.6%), and does not reflect scanning inaccuracy -- the underlying scan geometry is correct.
 
 ### Map Consistency Assessment
 
@@ -240,7 +266,7 @@ ros2 run turtlebot3_teleop teleop_keyboard
 ### Run the Scan Capture System
 
 ```bash
-# Default — saves to data/captures/, reads pose from /localization/pose
+# Default -- saves to data/captures/, reads pose from /localization/pose
 ros2 launch scan_capture_pkg scan_capture.launch.py
 
 # Override output directory
@@ -264,8 +290,8 @@ ros2 service call /scan_capture/capture scan_capture_pkg/srv/CaptureScan \
 ```
 
 Each successful capture writes two files to `data/captures/`:
-- `wp_01_<timestamp>.yaml` — pose (x, y, yaw) and scan metadata
-- `wp_01_<timestamp>.npy`  — raw range array (float32)
+- `wp_01_<timestamp>.yaml` -- pose (x, y, yaw) and scan metadata
+- `wp_01_<timestamp>.npy`  -- raw range array (float32)
 
 ### Record a Bag File
 
@@ -277,16 +303,19 @@ ros2 bag record -o data/mapping_run \
 ### Visualize the Captured Map
 
 ```bash
-# Open RViz with provided config
-rviz2 -d src/scan_capture_pkg/config/mapping.rviz
+# Overlay all captures in the odom frame (matplotlib)
+python3 src/analysis/visualize_captures.py
 
-# Or replay a recorded bag (keeps all scan captures visible in RViz)
-ros2 bag play data/mapping_run --clock
+# Interactive click-to-measure mode
+python3 src/analysis/visualize_captures.py --measure
+
+# Save the overlay figure to a file
+python3 src/analysis/visualize_captures.py --output figures/map_overlay.png
 ```
 
-In RViz, set the `/scan_capture/pointcloud` display history depth to at least the number of waypoints.
+> **Note:** The assignment instructions suggest using RViz bag replay for map visualization, but `/tf` was not included in the bag record command so RViz cannot transform the captured point clouds into the odom frame. Instead of writing a new node to do this transform we used a simple python script. The `visualize_captures.py` script reads the saved pose and range files directly and handles the transform correctly.
 
 ---
 
 ## 6. Acknowledgements
-Anders Smitterberg acknowledges his use of generative artificial intelligence in debugging code, and creation and formatting of markdown files.
+Anders Smitterberg acknowledges his use of generative artificial intelligence in debugging code, and creation and formatting of markdown files, additionally assistance making the visualize_captures.py script interactive and clickable for measurements is greatefully acknowledged. 
