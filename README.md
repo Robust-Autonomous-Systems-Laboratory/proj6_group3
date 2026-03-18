@@ -16,7 +16,7 @@ The environment is a lab EERC 727 with a recycling bin placed in the center. The
 
 ### Environment Sketch
 
-
+![Environment sketch](figures/environment_sketch.jpg)
 
 ### Waypoint Summary
 
@@ -38,6 +38,8 @@ For the full written strategy see [`docs/navigation_strategy.md`](docs/navigatio
 ## 2. System Architecture (5 pts)
 
 ### Data Flow Diagram
+
+![Data flow diagram](figures/data_flow_diagram.jpg)
 
 Bag file records `/scan`, `/odom`, `/imu`, `/localization/pose`, and `/scan_capture/pointcloud` for replay and analysis.
 

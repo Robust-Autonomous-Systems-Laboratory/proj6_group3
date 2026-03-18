@@ -14,6 +14,7 @@ EERC 727 -- a lab room with a recycling bin placed approximately in the center. 
 
 ### Environment Sketch
 
+![Environment sketch](../figures/environment_sketch.jpg)
 
 ### Ground Truth Measurements (Leica Laser Rangefinder)
 
