@@ -12,7 +12,7 @@
 
 ### Environment Description
 
-The environment is a lab EERC 727 with a recycling bin placed in the center. The north wall runs along the top of the room, and a door is located in the east wall. The robot circled the recycling bin clockwise across five waypoints, then returned to the starting position for a sixth capture to check loop closure drift. From each waypoint the LDS has a clear line of sight to the north wall, the east door, and one corner of the recycling bin. At each waypoint, after taking the RViz screenshot and calling the scan capture service, a Leica laser rangefinder was used to measure the distance to the nearest visible corner of the recycling bin as the ground truth along with the shortest distance to the door and north wall.
+The environment is a lab EERC 722 with a recycling bin placed in the center. The north wall runs along the top of the room, and a door is located in the east wall. The robot circled the recycling bin clockwise across five waypoints, then returned to the starting position for a sixth capture to check loop closure drift. From each waypoint the LDS has a clear line of sight to the north wall, the east door, and one corner of the recycling bin. At each waypoint, after taking the RViz screenshot and calling the scan capture service, a Leica laser rangefinder was used to measure the distance to the nearest visible corner of the recycling bin as the ground truth along with the shortest distance to the door and north wall.
 
 ### Environment Sketch
 
