@@ -207,11 +207,19 @@ Distances were measured using `analysis/visualize_captures.py --measure`. A figu
 - **Landmark occlusion:** The east door was partially obscured from several waypoints, making it difficult to identify and click a consistent measurement point in the scan that matched the exact point measured by the Leica. This is what I believe to be the primary cause of the elevated door errors at WP 3–5 (up to 41 cm / 9.6%), and does not reflect scanning inaccuracy -- the underlying scan geometry is correct.
 
 ### Map Consistency Assessment
+The overlaid map is internally consistent enough to reconstruct the room geometry and the position of the recycling bin. The north wall is the most stable feature across all captures, and the recycling bin corner also remains highly consistent. These two landmarks support the conclusion that the mapping process was locally accurate at each waypoint.
 
+Global consistency is weaker than local consistency. By the time the robot reaches later waypoints and returns to the start, accumulated drift becomes visible in the transformed scan overlay. The loop-closure capture confirms this: the robot returned to the same general area, but landmark distances no longer match WP 1 exactly. This is consistent with an odometry-dominated mapping system without loop closure or absolute pose correction.
 
 
 ### Recommendations for Improvement
 
+- Record `/tf` and `/tf_static` in the bag file so the captured point clouds can be replayed directly in RViz in the correct frame.
+- Add an absolute correction source such as AMCL, scan matching, fiducials, or wall-based alignment.
+- Reduce waypoint spacing so drift has less time to accumulate between captures.
+- Revisit EKF tuning, especially heading-related uncertainty, since later-waypoint errors suggest accumulated orientation drift.
+- Use the Project 5 sensor characterization model to down-weight long-range returns.
+- Standardize landmark measurement by always selecting the same physical edge or corner when using the interactive measurement tool.
 
 
 ---
