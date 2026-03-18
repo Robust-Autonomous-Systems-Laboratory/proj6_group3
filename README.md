@@ -116,7 +116,7 @@ Map distances were measured using `analysis/visualize_captures.py --measure` (se
 | **Mean** |         |           |         | **0.168** | **4.28**  |
 | **Max**  |         |           |         | **0.414** | **9.61**  |
 
-**Loop closure check** -- capture 6 is taken at the start position. Comparing its measurements to WP 1 reveals accumulated odometry drift over the full circuit. Drift is computed as the difference in map-measured distance between WP 6 and WP 1 for each landmark.
+**Loop closure check** -- capture 6 is taken at the start position. Comparing its measurements to WP 1 reveals accumulated odometry drift over the full circuit. Drift is computed as the difference in map-measured distance between WP 6 and WP 1 for each landmark. What is tricky is getting back to the same spot as the original measurement. Getting back to WP1 exactly was difficult, and in reality we were several centimeters off in location and heading, contriubting to the error. 
 
 | | Leica Bin (m) | Map Bin (m) | Leica N-Wall (m) | Map N-Wall (m) | Leica Door (m) | Map Door (m) | Drift -- Bin (m) |
 |---|---------------|-------------|------------------|----------------|----------------|--------------|-----------------|
@@ -129,33 +129,33 @@ At each waypoint the robot should see: the **north wall** behind/to the side, th
 
 **Waypoint 1** (yaw approx. +1deg, facing east):
 - Expected: north wall to the left (north), east door ahead-right, bin corner to the south-west
-- Observed in map:
-- Rotational misalignment:
+- Observed in map: Robot can clearly see north wall, and east door. Corner of recycling bin is clearly visible.
+- Rotational misalignment: this is the beginning, so there was none.
 
 **Waypoint 2** (yaw approx. +3deg, facing east):
 - Expected: north wall to the left (north), east door ahead, bin corner to the south-west
-- Observed in map:
-- Rotational misalignment:
+- Observed in map: moved towards east door. other landmarks clearly visible.
+- Rotational misalignment: slight perhaps, difficult to say.
 
 **Waypoint 3** (yaw approx. −97deg, facing south):
 - Expected: north wall behind, east door to the left, bin corner to the north-west
-- Observed in map:
-- Rotational misalignment:
+- Observed in map: robot rotated to the right, but there is some jitter and shake in the map and in Rviz, maybe the EKF isn't doig  graet job during the turn.
+- Rotational misalignment: slight.
 
 **Waypoint 4** (yaw approx. −170deg, facing west):
 - Expected: north wall to the right, east door to the right-rear, bin corner ahead-right (north)
-- Observed in map:
-- Rotational misalignment:
+- Observed in map: expected landmarks visible. slightly difficult to see corner of the recycle bin. EKF is further away from the truth, map is further away from correct location.
+- Rotational misalignment: more obvious.
 
 **Waypoint 5** (yaw approx. +105deg, facing north):
 - Expected: north wall ahead, east door to the right, bin corner to the right (east)
-- Observed in map:
-- Rotational misalignment:
+- Observed in map: expected landmarks visible. some jitter and shake from turning again. EKF is pretty far out of whack. 
+- Rotational misalignment: noticible. 
 
 **Loop closure capture (capture 6, return to start)** (yaw approx. +16deg, facing east):
 - Expected: same view as WP 1 -- north wall to the left, east door ahead-right, bin corner to the south-west
-- Scan alignment with WP 1 in map:
-- Rotational offset relative to WP 1:
+- Scan alignment with WP 1 in map: expected landmarks visible, but map clearly shifted.
+- Rotational offset relative to WP 1: obvious
 
 ### RViz Screenshots
 
@@ -215,7 +215,7 @@ Global consistency is weaker than local consistency. By the time the robot reach
 ### Recommendations for Improvement
 
 - Record `/tf` and `/tf_static` in the bag file so the captured point clouds can be replayed directly in RViz in the correct frame.
-- Add a method of coreecting map faya such as overlaying features.
+- Add a method of correcting map such as overlaying features.
 - Reduce waypoint spacing so drift has less time to accumulate between captures.
 - Revisit EKF tuning, especially heading-related uncertainty, since later-waypoint errors suggest accumulated orientation drift.
 - Use the Project 5 sensor characterization model to help reject outlier point returns
